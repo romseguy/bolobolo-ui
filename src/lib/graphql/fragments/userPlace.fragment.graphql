@@ -1,0 +1,14 @@
+#import "./place.fragment.graphql"
+#import "./role.fragment.graphql"
+
+fragment UserPlaceDetails on UserPlace {
+  id
+  x
+  y
+  place {
+    ...PlaceDetails
+  }
+  role {
+    ...RoleDetails
+  }
+}

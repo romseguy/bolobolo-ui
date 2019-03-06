@@ -1,0 +1,8 @@
+mutation createUserPlace($userPlace: CreateUserPlaceAttrs!) {
+  createUserPlace(userPlace: $userPlace) {
+    id
+    place {
+      title
+    }
+  }
+}

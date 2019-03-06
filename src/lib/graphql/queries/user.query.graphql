@@ -1,0 +1,7 @@
+#import "../fragments/userPlace.fragment.graphql"
+
+query user($username: String) {
+  myPlaces(username: $username) {
+    ...UserPlaceDetails
+  }
+}

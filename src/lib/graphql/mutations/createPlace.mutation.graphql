@@ -1,0 +1,10 @@
+mutation createPlace($place: CreatePlaceAttrs!) {
+  createPlace(place: $place) {
+    id
+    city
+    department
+    latitude
+    longitude
+    title
+  }
+}

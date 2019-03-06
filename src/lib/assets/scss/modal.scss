@@ -1,0 +1,51 @@
+/*!
+override of node_modules/semantic-ui-sass/scss/modules/_modal.scss
+for setLocationForm
+*/
+
+/*--------------
+     Content
+---------------*/
+
+.ui.modal > form .content {
+  display: block;
+  width: 100%;
+  font-size: 1em;
+  line-height: 1.4;
+  padding: 1.5rem;
+  background: none;
+}
+
+/*--------------
+     Actions
+---------------*/
+
+.ui.modal > form .actions {
+  background: none;
+  padding: 1rem 1rem;
+  border-top: 1px solid rgba(34, 36, 38, 0.15);
+  text-align: right;
+}
+.ui.modal > form .actions > .button {
+  margin-left: 0.75em;
+}
+
+/*-------------------
+       Responsive
+--------------------*/
+
+/* Mobile */
+@media only screen and (max-width: 767px) {
+  .ui.modal > form .content {
+    display: block;
+    padding: 1rem !important;
+  }
+/* Let Buttons Stack */
+  .ui.modal > form .actions {
+    padding: 1rem 1rem 0rem !important;
+  }
+  .ui.modal > form .actions > .buttons,
+  .ui.modal > form .actions > .button {
+    margin-bottom: 1rem;
+  }
+}

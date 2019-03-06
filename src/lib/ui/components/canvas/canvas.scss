@@ -1,0 +1,15 @@
+.canvas {
+  border: solid 1px #d1d1d1;
+  background-image: url('./canvas-bg.jpg');
+  background-repeat: repeat;
+  cursor: grab;
+
+  &--dragging {
+    cursor: grabbing;
+  }
+
+  &--readonly {
+    background-image: none !important;
+    background-repeat: unset !important;
+  }
+}

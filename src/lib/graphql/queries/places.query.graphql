@@ -1,0 +1,7 @@
+#import '../fragments/place.fragment.graphql'
+
+query places {
+  places {
+    ...PlaceDetails
+  }
+}

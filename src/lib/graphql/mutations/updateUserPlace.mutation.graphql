@@ -1,0 +1,5 @@
+mutation updateUserPlace($placeId: ID!, $userPlace: UpdateUserPlaceAttrs!) {
+  updateUserPlace(userPlace: $userPlace) {
+    id
+  }
+}

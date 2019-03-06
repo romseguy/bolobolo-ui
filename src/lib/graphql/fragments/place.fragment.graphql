@@ -1,0 +1,8 @@
+fragment PlaceDetails on Place {
+  id
+  city
+  department
+  latitude
+  longitude
+  title
+}

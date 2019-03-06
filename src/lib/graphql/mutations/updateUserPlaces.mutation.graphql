@@ -1,0 +1,5 @@
+mutation updateUserPlaces($userPlaces: [UpdateUserPlacesAttrs]!) {
+  updateUserPlaces(userPlaces: $userPlaces) {
+    id
+  }
+}

@@ -1,0 +1,7 @@
+#import '../fragments/userPlace.fragment.graphql'
+
+query me {
+  myPlaces {
+    ...UserPlaceDetails
+  }
+}

@@ -1,0 +1,4 @@
+fragment RoleDetails on Role {
+  id
+  roleName
+}

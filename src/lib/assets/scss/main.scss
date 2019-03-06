@@ -1,0 +1,73 @@
+@font-face {
+  font-family: 'Fira Sans';
+  src: url('../fonts/FiraSans-Regular.woff2') format('woff2'),
+  url('../fonts/FiraSans-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'myriad-pro-condensed';
+  src: url('../fonts/myriad-pro-condensed.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+$font-name: 'Fira Sans' !default;
+$font-family: $font-name, 'Helvetica Neue', Arial, Helvetica, sans-serif !default;
+$import-google-fonts: false;
+$icons-font-path: '~semantic-ui-sass/icons' !default;
+
+@import "~semantic-ui-sass/semantic-ui.scss";
+
+// SEMANTIC-UI OVERRIDES
+
+img.ui.image {
+  display: inline-block !important;
+}
+
+.ui.loading.segment:before {
+  background: none;
+}
+
+header .ui.stackable.grid > .column:not(.row) {
+  padding: 0 !important;
+}
+footer .ui.stackable.grid > .column:not(.row) {
+  padding: 0 !important;
+}
+
+// mobile
+/*@media only screen and (max-width: 767px) {
+  header .ui.stackable.grid .ui.stackable.grid {
+    margin: 0 !important;
+  }
+
+  .ui.fluid.container {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}*/
+
+// APP
+
+body {
+  font-size: 1.6rem;
+  line-height: normal !important;
+}
+
+#app {
+  font-size: 62.5%;
+}
+
+// 3RD PARTY
+.geosuggest__suggests--hidden {
+  max-height: 0;
+  overflow: hidden;
+  border-width: 0;
+}
+
+.geosuggest__item--active {
+  background: #267dc0;
+  color: #fff;
+}

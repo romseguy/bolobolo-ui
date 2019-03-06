@@ -1,0 +1,11 @@
+  myRelatives {
+    id
+  }
+  user(username: $username) {
+    id
+  }
+  users {
+    id
+    username
+  }
+}

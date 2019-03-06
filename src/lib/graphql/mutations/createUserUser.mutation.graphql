@@ -1,0 +1,5 @@
+mutation createUserUser($userId: ID!, $roleId: ID!) {
+  createUserUser(userId: $userId, roleId: $roleId) {
+    id
+  }
+}

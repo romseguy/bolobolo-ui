@@ -1,0 +1,10 @@
+mutation updatePlace($placeId: ID!, $place: UpdatePlaceAttrs!) {
+  updatePlace(id: $placeId, place: $place) {
+    id
+    city
+    department
+    latitude
+    longitude
+    title
+  }
+}

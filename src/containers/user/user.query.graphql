@@ -1,0 +1,14 @@
+query user($username: String) {
+  myPlaces(username: $username) {
+    id
+    place {
+      id
+      title
+    }
+    role {
+      id
+    }
+    x
+    y
+  }
+}

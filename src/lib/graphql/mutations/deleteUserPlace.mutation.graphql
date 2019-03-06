@@ -1,0 +1,7 @@
+#import '../fragments/userPlace.fragment.graphql'
+
+mutation deleteUserPlace($placeId: ID) {
+  deleteUserPlace(placeId: $placeId) {
+    ...UserPlaceDetails
+  }
+}
