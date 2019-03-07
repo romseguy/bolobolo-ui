@@ -11,5 +11,6 @@ export default {
     devTools: true && isDev,
     i18n: false && isDev,
     logger: false && isDev
-  }
+  },
+  mocking: true
 }

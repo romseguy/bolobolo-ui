@@ -5,9 +5,13 @@ import { onError } from 'apollo-link-error'
 import { ApolloLink, concat } from 'apollo-link'
 import { createHttpLink } from 'apollo-link-http'
 import { RetryLink } from 'apollo-link-retry'
+import { SchemaLink } from 'apollo-link-schema'
+import { buildClientSchema } from 'graphql'
+import { addMockFunctionsToSchema } from 'graphql-tools'
+import config from '@/config'
 import debug from '@/lib/helpers/debug'
 import getLang from '@/lib/helpers/getLang'
-import { CLIENT_RENEG_LIMIT } from 'tls'
+import introspectionResult from '@/lib/graphql/graphql.schema.json'
 
 function configureClient() {
   const uri = `${process.env.REACT_APP_GRAPHQL_URL}?locale=${getLang()}`
@@ -46,14 +50,31 @@ function configureClient() {
     }
   })
 
+  const links = [authLink, errorLink, loggerLink]
+
+  if (config.mocking) {
+    // const mocks = {
+    //   Query: () => {
+
+    //   }
+    // }
+
+    const schema = buildClientSchema(introspectionResult.data)
+
+    // procedure...
+    addMockFunctionsToSchema({ schema })
+
+    const schemaLink = new SchemaLink({
+      schema
+    })
+
+    links.push(schemaLink)
+  } else {
+    links.push(httpLink)
+  }
+
   return new ApolloClient({
-    link: ApolloLink.from([
-      authLink,
-      errorLink,
-      loggerLink,
-      retryLink,
-      httpLink
-    ]),
+    link: ApolloLink.from(links),
     cache: new InMemoryCache()
   })
 }
