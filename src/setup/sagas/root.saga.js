@@ -1,10 +1,10 @@
 import { all, call, fork } from 'redux-saga/effects'
 import makeRestartable from '@/lib/helpers/makeRestartable'
 import sagas from '@/core/core.sagas'
-import checkOfflineSaga from './sagas/checkOffline.saga'
-import initializeUserLocationSaga from './sagas/initializeUserLocation.saga'
+import checkOfflineSaga from './checkOffline.saga'
+import initializeUserLocationSaga from './initializeUserLocation.saga'
 
-export default function* setupSaga() {
+export default function* rootSaga() {
   yield fork(checkOfflineSaga)
   yield fork(initializeUserLocationSaga)
 

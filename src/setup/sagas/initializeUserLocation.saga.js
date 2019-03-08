@@ -1,5 +1,4 @@
-import { delay } from 'redux-saga'
-import { call, getContext, put, race } from 'redux-saga/effects'
+import { call, delay, getContext, put, race } from 'redux-saga/effects'
 
 import debug from '@/lib/helpers/debug'
 import getCurrentPosition from '@/lib/helpers/getCurrentPosition'

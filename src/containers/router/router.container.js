@@ -1,5 +1,5 @@
 import React from 'react'
-import { translate } from 'react-i18next'
+import { withTranslation } from 'react-i18next'
 import { connect } from 'react-redux'
 import { compose, pure, withState } from 'recompose'
 import { NOT_FOUND } from 'redux-first-router'
@@ -18,8 +18,8 @@ import PlaceFormContainer from '@/containers/placeForm'
 import SymbolFormContainer from '@/containers/symbolForm'
 import UserFormContainer from '@/containers/userForm'
 
-import About from '@/lib/ui/components/about'
-import Tutorial from '@/lib/ui/components/tutorial'
+import { CanvasManager } from '@/lib/ui/components/canvas'
+import { MapManager } from '@/lib/ui/components/map'
 import { Loader } from '@/lib/ui/components/layout'
 import SidePanel from '@/lib/ui/components/sidePanel'
 
@@ -44,24 +44,53 @@ class RouterContainer extends React.Component {
     }
   }
 
+  renderSidePanel(routeType) {
+    let sidePanel = null
+
+    if (
+      [routerActions.ME_PLACES_ADD, routerActions.ME_PLACE_EDIT].includes(
+        routeType
+      )
+    ) {
+      sidePanel = <PlaceFormContainer {...routeProps} routeType={routeType} />
+    } else if (
+      [
+        routerActions.ME_SYMBOLS_ADD,
+        routerActions.ME_SYMBOL_EDIT,
+        routerActions.PLACE_SYMBOLS_ADD
+      ].includes(routeType)
+    ) {
+      sidePanel = <SymbolFormContainer {...routeProps} />
+    } else if (
+      [routerActions.ME_USERS_ADD, routerActions.ME_USER_EDIT].includes(
+        routeType
+      )
+    ) {
+      sidePanel = <UserFormContainer {...routeProps} />
+    }
+
+    if (!sidePanel) {
+      return null
+    }
+
+    return <SidePanel>{sidePanel}</SidePanel>
+  }
+
   render() {
     const {
       currentRoute = {},
       currentUser,
       prevRouteType,
-      prevRoute = {},
-      t
+      prevRoute = {}
     } = this.props
 
     let { routeType } = this.props
 
     const routeProps = { ...this.props, ...this.state }
 
-    // exit cases
+    // early exit cases
     if (routeType === routerActions.LOGOUT) {
       return null
-    } else if (routeType === NOT_FOUND) {
-      return <MainPanelContainer {...routeProps} error={t('not_found')} />
     } else if (routeType === routerActions.AUTH) {
       if (prevRoute.requiresAuth === false) {
         routeType = prevRouteType
@@ -72,52 +101,29 @@ class RouterContainer extends React.Component {
       return <Loader indeterminate />
     }
 
-    // standalone
-    let control = null
-
-    if (routeType === routerActions.ABOUT) {
-      control = About
-    } else if (routeType === routerActions.TUTORIAL) {
-      control = <Tutorial {...routeProps} routes={routerActions} />
-    }
-
-    // optional SidePanel
-    let sidePanelEl = null
-
     if (
-      [routerActions.ME_PLACES_ADD, routerActions.ME_PLACE_EDIT].includes(
-        routeType
+      currentRoute.control === MapManager ||
+      currentRoute.control === CanvasManager
+    ) {
+      return (
+        <>
+          <MainPanelContainer
+            {...routeProps}
+            control={control}
+            currentRoute={routes[routeType]}
+            routeType={routeType}
+          />
+          {this.renderSidePanel(routeType)}
+        </>
       )
-    ) {
-      sidePanelEl = <PlaceFormContainer {...routeProps} routeType={routeType} />
-    } else if (
-      [
-        routerActions.ME_SYMBOLS_ADD,
-        routerActions.ME_SYMBOL_EDIT,
-        routerActions.PLACE_SYMBOLS_ADD
-      ].includes(routeType)
-    ) {
-      sidePanelEl = <SymbolFormContainer {...routeProps} />
-    } else if (
-      [routerActions.ME_USERS_ADD, routerActions.ME_USER_EDIT].includes(
-        routeType
+    } else {
+      return (
+        <>
+          <currentRoute.control {...routeProps} routes={routerActions} />
+          {this.renderSidePanel(routeType)}
+        </>
       )
-    ) {
-      sidePanelEl = <UserFormContainer {...routeProps} />
     }
-
-    // MainPanel
-    return (
-      <div>
-        <MainPanelContainer
-          {...routeProps}
-          control={control}
-          currentRoute={routes[routeType]}
-          routeType={routeType}
-        />
-        {sidePanelEl && <SidePanel>{sidePanelEl}</SidePanel>}
-      </div>
-    )
   }
 }
 
@@ -140,7 +146,7 @@ const mapStateToProps = state => {
 }
 
 export default compose(
-  translate(),
+  withTranslation(),
   connect(mapStateToProps),
   pure
 )(RouterContainer)

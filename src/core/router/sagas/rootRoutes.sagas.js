@@ -15,7 +15,9 @@ import {
 
 // routes sagas for / level only!
 
-export function* rootRouteSaga(payload, settings) {
+export function* rootRoutesaga(payload, settings) {}
+
+export function* placesRouteSaga(payload, settings) {
   const { client, onEnter, prevRoute } = settings
 
   if (![routerActions.AUTH].includes(prevRoute.type)) {
@@ -34,7 +36,7 @@ export function* authRouteSaga(payload, settings) {
   const { currentUser, prevRoute } = settings
 
   if (currentUser) {
-    yield put(routerActions.rootRoute())
+    yield put(routerActions.homeRoute())
     return
   }
 
@@ -58,10 +60,10 @@ export function* authRouteSaga(payload, settings) {
     yield call(toggleAuthModalSaga)
 
     if (prevRoute.type === '') {
-      yield put(routerActions.rootRoute())
+      yield put(routerActions.homeRoute())
     } else {
       if (prevRoute.requiresAuth !== false) {
-        yield put(routerActions.rootRoute())
+        yield put(routerActions.homeRoute())
       } else {
         yield put({ type: prevRoute.type })
       }
@@ -83,7 +85,7 @@ export function* logoutRouteSaga(payload, settings) {
     })
   }
 
-  yield put(routerActions.rootRoute())
+  yield put(routerActions.homeRoute())
 }
 
 export function* notFoundRouteSaga() {

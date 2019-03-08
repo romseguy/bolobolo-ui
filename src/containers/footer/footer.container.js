@@ -1,7 +1,7 @@
 import { BINARY_COLOR_BLUE_30, BINARY_COLOR_BLUE_50 } from 'binary-ui-styles'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { translate } from 'react-i18next'
+import { withTranslation } from 'react-i18next'
 import { connect } from 'react-redux'
 import { compose, getContext, pure, withHandlers } from 'recompose'
 import styled from 'styled-components'
@@ -82,7 +82,7 @@ const mapDispatchToProps = {
 }
 
 export default compose(
-  translate(),
+  withTranslation(),
   getContext({ i18n: PropTypes.object }),
   connect(
     mapStateToProps,

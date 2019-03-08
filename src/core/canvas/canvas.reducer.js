@@ -1,4 +1,4 @@
-import R from 'ramda'
+import { equals, unionWith } from 'ramda'
 import { merge, set, setIn, updateIn, push } from 'zaphod/compat'
 
 import { canvasActions } from './canvas.actions'
@@ -73,7 +73,7 @@ export function canvasReducer(state = canvasState, { payload, type }) {
       state = updateIn(state, ['selectedNodeIds'], selectedNodeIds => {
         return selectAll
           ? state.nodes.map(node => node.id)
-          : R.unionWith(R.equals, selectedNodeIds, payload.selectedNodeIds)
+          : unionWith(equals, selectedNodeIds, payload.selectedNodeIds)
       })
 
       state = updateIn(state, ['nodes'], nodes =>

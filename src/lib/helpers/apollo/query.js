@@ -1,5 +1,4 @@
 import config from '@/config'
-import { noop } from 'lodash-es'
 import debug from '@/lib/helpers/debug'
 
 async function query(client, { query, variables }, { cache, from = '' } = {}) {

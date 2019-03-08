@@ -1,6 +1,6 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
-import { translate } from 'react-i18next'
+import { withTranslation } from 'react-i18next'
 import { connect } from 'react-redux'
 import { compose, pure } from 'recompose'
 
@@ -34,6 +34,6 @@ export default compose(
     mapStateToProps,
     mapDispatchToProps
   ),
-  translate(),
+  withTranslation(),
   pure
 )(HelmetContainer)

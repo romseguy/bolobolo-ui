@@ -1,6 +1,5 @@
 import './canvas.scss'
 
-import { debounce } from 'lodash-es'
 import React from 'react'
 import { DropTarget } from 'react-dnd'
 import cx from 'classnames'
@@ -11,6 +10,8 @@ import canvasItemTypes from '@/lib/constants/canvasItemTypes'
 
 import DraggableCanvasNode from './draggableCanvasNode'
 import { pan, zoom } from './canvasUtils'
+
+const debounce = (fn, ms) => () => fn()
 
 class Canvas extends React.Component {
   constructor(props) {

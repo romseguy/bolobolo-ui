@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { graphql } from 'react-apollo'
-import { translate } from 'react-i18next'
+import { withTranslation } from 'react-i18next'
 import { connect } from 'react-redux'
 import { compose, getContext, pure, withHandlers, withState } from 'recompose'
 import { change } from 'redux-form'
@@ -287,7 +287,7 @@ const updatePlaceMutationConfig = {
 }
 
 export default compose(
-  translate(),
+  withTranslation(),
   connect(
     mapStateToProps,
     mapDispatchToProps

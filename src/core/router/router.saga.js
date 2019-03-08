@@ -1,6 +1,7 @@
 import { NOT_FOUND } from 'redux-first-router'
 import {
   call,
+  delay,
   fork,
   getContext,
   put,
@@ -8,7 +9,6 @@ import {
   spawn,
   take
 } from 'redux-saga/effects'
-import { delay } from 'redux-saga'
 import routes from '@/routes'
 
 import isLocationAction from '@/lib/helpers/isLocationAction'

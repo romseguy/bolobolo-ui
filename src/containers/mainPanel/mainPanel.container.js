@@ -25,9 +25,9 @@ import {
 import { routerActions } from '@/core/router'
 
 import { CanvasManager } from '@/lib/ui/components/canvas'
+import { MapManager } from '@/lib/ui/components/map'
 import Icon from '@/lib/ui/components/icon'
 import { Loader } from '@/lib/ui/components/layout'
-import { MapManager } from '@/lib/ui/components/map'
 
 import createModes from './createModes'
 import createToolboxes from './createToolboxes'
@@ -274,7 +274,7 @@ class MainPanelContainer extends Component {
   }
 
   render() {
-    const { control, currentRoute, error, isLoading, loaded } = this.props
+    const { container, control, error, isLoading, loaded } = this.props
 
     const { mapHeight, mapWidth } = this.state
 
@@ -294,49 +294,23 @@ class MainPanelContainer extends Component {
       )
     }
 
-    if (error) {
-      return (
-        <div
-          style={{
-            display: 'table-cell',
-            height: mapHeight,
-            textAlign: 'center',
-            verticalAlign: 'middle',
-            width: mapWidth
-          }}
-        >
-          <h1>
-            <Icon name="parrot" height={32} /> 404
-          </h1>
-          <p>{error}.</p>
-        </div>
-      )
-    }
-
     let controlEl = null
 
-    if (control) {
-      controlEl = React.createElement(control, {
-        ...this.props,
-        height: mapHeight
-      })
-    }
-
-    if (currentRoute.control === MapManager) {
-      controlEl = React.createElement(currentRoute.container, {
+    if (control === MapManager) {
+      controlEl = React.createElement(container, {
         ...this.props,
         ...this.state,
-        control: currentRoute.control,
+        control,
         toggleNodeAnchorTooltip: this.toggleNodeAnchorTooltip,
         onMapClick: this.handleMapClick,
         onNodeAnchorClick: this.handleNodeAnchorClick,
         onNodeHeaderClick: this.handleNodeHeaderClick
       })
-    } else if (currentRoute.control === CanvasManager) {
-      controlEl = React.createElement(currentRoute.container, {
+    } else if (control === CanvasManager) {
+      controlEl = React.createElement(container, {
         ...this.props,
         ...this.state,
-        control: currentRoute.control,
+        control,
         toggleNodeAnchorTooltip: this.toggleNodeAnchorTooltip,
         onCanvasClick: this.handleCanvasClick,
         onDeleteSelectedNode: this.handleDeleteSelectedNode,
@@ -354,12 +328,12 @@ class MainPanelContainer extends Component {
   }
 }
 
-const mapStateToProps = (state, { currentRoute, routeType }) => {
+const mapStateToProps = (state, { control }) => {
   const props = {
     loaded: true
   }
 
-  if (currentRoute.control === MapManager) {
+  if (control === MapManager) {
     const center = getMapCenter(state)
     const nodes = getMapNodes(state)
     const nodesLoading = getMapNodesLoading(state)
@@ -373,7 +347,7 @@ const mapStateToProps = (state, { currentRoute, routeType }) => {
     if (center) {
       props.center = center
     }
-  } else if (currentRoute.control === CanvasManager) {
+  } else if (control === CanvasManager) {
     const nodes = getCanvasNodes(state)
     const nodesLoading = getCanvasNodesLoading(state)
     const selectedNodeIds = getSelectedNodeIds(state)

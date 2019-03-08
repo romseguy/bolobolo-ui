@@ -1,13 +1,15 @@
 import { NOT_FOUND } from 'redux-first-router'
 
 export const routerActions = {
-  ROOT: 'ROOT_ROUTE',
+  HOME: 'HOME_ROUTE',
 
   ABOUT: 'ABOUT_ROUTE',
   TUTORIAL: 'TUTORIAL_ROUTE',
 
   AUTH: 'AUTH_ROUTE',
   LOGOUT: 'LOGOUT_ROUTE',
+
+  PLACES: 'PLACES',
 
   PLACE_VIEW: 'PLACE_VIEW_ROUTE',
   PLACE_SYMBOLS_ADD: 'PLACE_SYMBOLS_ADD',
@@ -32,8 +34,8 @@ export const routerActions = {
     type: NOT_FOUND
   }),
 
-  rootRoute: payload => ({
-    type: routerActions.ROOT,
+  homeRoute: payload => ({
+    type: routerActions.HOME,
     payload
   }),
 

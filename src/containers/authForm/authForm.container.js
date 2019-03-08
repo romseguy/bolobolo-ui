@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { graphql } from 'react-apollo'
-import { translate } from 'react-i18next'
+import { withTranslation } from 'react-i18next'
 import { getFormSyncErrors } from 'redux-form'
 import { connect } from 'react-redux'
 import { compose, pure, withHandlers, withState } from 'recompose'
@@ -38,7 +38,7 @@ const handlers = {
       currentStep,
       doLogin,
       doRegister,
-      rootRoute,
+      homeRoute,
       setCurrentStep,
       setServerErrors,
       setModal
@@ -54,7 +54,7 @@ const handlers = {
 
             if (!result.stack) {
               setModal(modalTypes.AUTH, {}, { open: false })
-              rootRoute()
+              homeRoute()
               // todo: setCurrentStep(authStepsTypes.REGISTER_OK)
             }
           } catch (error) {
@@ -66,7 +66,7 @@ const handlers = {
           try {
             await doLogin(formValues)
             setModal(modalTypes.AUTH, {}, { open: false })
-            rootRoute()
+            homeRoute()
           } catch (error) {
             setServerErrors(getServerErrors(error))
           }
@@ -92,7 +92,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   setModal: modalActions.setModal,
-  rootRoute: routerActions.rootRoute
+  homeRoute: routerActions.homeRoute
 }
 
 const loginMutationConfig = {
@@ -136,7 +136,7 @@ const registerMutationConfig = {
 }
 
 export default compose(
-  translate(),
+  withTranslation(),
   connect(
     mapStateToProps,
     mapDispatchToProps

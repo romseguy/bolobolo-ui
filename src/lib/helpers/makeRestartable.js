@@ -1,5 +1,4 @@
-import { delay } from 'redux-saga'
-import { call, spawn } from 'redux-saga/effects'
+import { call, delay, spawn } from 'redux-saga/effects'
 
 import debug from '@/lib/helpers/debug'
 

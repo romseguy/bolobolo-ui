@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { Suspense } from 'react'
+import { hot } from 'react-hot-loader'
 import { Provider } from 'react-redux'
 import { ApolloProvider } from 'react-apollo'
 import { I18nextProvider } from 'react-i18next'
@@ -45,7 +46,10 @@ function Root({ client, i18n, store }) {
       <Provider store={store}>
         <ApolloProvider client={client}>
           <I18nextProvider i18n={i18n}>
-            <App />
+            <Suspense fallback={<div />}>
+              <App />
+            </Suspense>
+            >
           </I18nextProvider>
         </ApolloProvider>
       </Provider>
@@ -53,4 +57,4 @@ function Root({ client, i18n, store }) {
   )
 }
 
-export default Root
+export default hot(module)(Root)

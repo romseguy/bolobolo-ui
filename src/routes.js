@@ -1,21 +1,25 @@
-import React from 'react'
 import { NOT_FOUND } from 'redux-first-router'
 
 import symbolTypes from '@/lib/constants/symbolTypes'
 
 import { routerActions } from '@/core/router'
 
-import MeContainer from './containers/me'
+import MeContainer from '@/containers/me'
+import HomeContainer from '@/containers/home'
 import PlaceContainer from '@/containers/place'
 import PlacesContainer from '@/containers/places'
 import UserContainer from '@/containers/user'
 
+import About from '@/lib/ui/components/about'
 import { CanvasManager } from '@/lib/ui/components/canvas'
 import { MapManager } from '@/lib/ui/components/map'
+import NotFound from '@/lib/ui/components/notFound'
+import Tutorial from '@/lib/ui/components/tutorial'
 
 import {
   notFoundRouteSaga,
-  rootRouteSaga,
+  rootRoutesaga,
+  placesRouteSaga,
   aboutRouteSaga,
   authRouteSaga,
   logoutRouteSaga
@@ -38,25 +42,35 @@ import { userViewRouteSaga } from '@/core/router/sagas/userRoutes.sagas'
 
 export default {
   [NOT_FOUND]: {
+    control: NotFound,
     path: '/not-found',
     saga: notFoundRouteSaga
   },
 
-  [routerActions.ROOT]: {
+  [routerActions.HOME]: {
+    control: HomeContainer,
+    path: '/',
+    requiresAuth: false,
+    saga: rootRoutesaga
+  },
+
+  [routerActions.PLACES]: {
     container: PlacesContainer,
     control: MapManager,
-    path: '/',
-    saga: rootRouteSaga,
+    path: '/places',
+    saga: placesRouteSaga,
     requiresAuth: false
   },
 
   [routerActions.ABOUT]: {
+    control: About,
     path: '/about',
     saga: aboutRouteSaga,
     requiresAuth: false
   },
 
   [routerActions.TUTORIAL]: {
+    control: Tutorial,
     path: '/tutorial',
     requiresAuth: false
   },

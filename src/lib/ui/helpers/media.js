@@ -25,4 +25,5 @@ const media = Object.keys(sizeTypes).reduce((accumulator, label) => {
   return accumulator
 }, {})
 
+// https://www.styled-components.com/docs/advanced#media-templates
 export default media

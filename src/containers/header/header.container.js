@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import { translate } from 'react-i18next'
+import { withTranslation } from 'react-i18next'
 import { graphql } from 'react-apollo'
 import { compose, getContext, pure, withHandlers } from 'recompose'
 import { change } from 'redux-form'
@@ -68,10 +68,10 @@ const handlers = {
       )
 
       setCenter([place.latitude, place.longitude])
-      routes.rootRoute()
+      routes.homeRoute()
     } else {
       setCenter([userLocation.lat, userLocation.lng])
-      routes.rootRoute()
+      routes.homeRoute()
     }
   },
 
@@ -227,7 +227,7 @@ class HeaderContainer extends Component {
         <Col tablet={12}>
           <Grid columns={2} stackable>
             <Col tablet={6}>
-              <HeaderLink to={routerActions.rootRoute()}>
+              <HeaderLink to={routerActions.homeRoute()}>
                 {t('header:map')}
               </HeaderLink>
             </Col>
@@ -314,7 +314,7 @@ const mapDispatchToProps = {
 const logoutMutationConfig = { name: 'doLogout' }
 
 export default compose(
-  translate(),
+  withTranslation(),
   connect(
     mapStateToProps,
     mapDispatchToProps

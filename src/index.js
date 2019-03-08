@@ -2,7 +2,6 @@
 import './lib/assets/scss/main.scss'
 
 // react
-import React from 'react'
 import configureRender from './setup/react'
 import Root from './setup/react/root'
 
@@ -16,7 +15,7 @@ import routes from './routes'
 
 // redux-saga
 import configureSagaMiddleware from './setup/redux/saga'
-import rootSaga from './setup/setup.saga'
+import rootSaga from './setup/sagas/root.saga'
 
 // apollo
 import configureClient from './setup/apollo'
@@ -38,7 +37,7 @@ const store = configureStore({
   router,
   sagaMiddleware
 })
-const doRender = configureRender(client, i18n, store)
+const render = configureRender(client, i18n, store)
 
 // pre-rendering initialization
 initializeI18n({
@@ -49,18 +48,11 @@ initializeI18n({
 initializeWindow(window)
 
 // rendering
-doRender(Root)
+render(Root)
 
 // post-rendering initialization
 sagaMiddleware.run(rootSaga)
 router.initialDispatch()
-
-// Webpack Hot Module Replacement (HMR)
-if (module.hot) {
-  module.hot.accept('@/setup/react/root', () => {
-    doRender(Root)
-  })
-}
 
 // dev tools
 if (process.env.NODE_ENV === 'development') {
