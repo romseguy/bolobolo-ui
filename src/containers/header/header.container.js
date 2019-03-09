@@ -223,65 +223,41 @@ class HeaderContainer extends Component {
     }
 
     return (
-      <HeaderGrid columns={2} stackable>
-        <Col tablet={12}>
-          <Grid columns={2} stackable>
-            <Col tablet={6}>
-              <HeaderLink to={routerActions.homeRoute()}>
-                {t('header:map')}
-              </HeaderLink>
-            </Col>
-
-            <Col tablet={10} textAlign={isMobile ? 'left' : 'center'}>
-              <HeaderTitle
-                {...rest}
-                entityIcon={entityIcon}
-                entityIconTitle={entityIconTitle}
-                locationIcon={locationIcon}
-                locationIconTitle={locationIconTitle}
-                title={subtitle}
-                onTitleClick={onTitleClick}
-              >
-                {title}
-              </HeaderTitle>
-            </Col>
-          </Grid>
-        </Col>
-
-        <Col tablet={4} textAlign={isMobile ? 'left' : 'right'}>
-          {currentUser && (
-            <HeaderLink
-              title={t('header:my_profile_go')}
-              to={routerActions.meRoute()}
-              style={{ marginRight: '5px' }}
-            >
-              {currentUser.username}
-            </HeaderLink>
-          )}
-
+      <Col
+        style={{
+          display: 'flex',
+          justifyContent: 'flex-end'
+        }}
+      >
+        {currentUser && (
           <HeaderLink
-            to={routerActions.aboutRoute()}
-            style={{ marginRight: 0 }}
+            title={t('header:my_profile_go')}
+            to={routerActions.meRoute()}
+            style={{ marginRight: '5px' }}
           >
-            <Icon name="question circle" title={t('header:help')} />
+            {currentUser.username}
           </HeaderLink>
+        )}
 
-          {currentUser ? (
-            <HeaderDropdown className="right" pointing={true} inline>
-              <HeaderDropdown.Menu>
-                <HeaderDropdown.Item
-                  content={<HeaderLinkRaw>{t('header:logout')}</HeaderLinkRaw>}
-                  onClick={e => routes.logoutRoute()}
-                />
-              </HeaderDropdown.Menu>
-            </HeaderDropdown>
-          ) : (
-            <HeaderLink to={routerActions.authRoute()}>
-              {t('header:login')}
-            </HeaderLink>
-          )}
-        </Col>
-      </HeaderGrid>
+        <HeaderLink to={routerActions.aboutRoute()} style={{ marginRight: 0 }}>
+          <Icon name="question circle" title={t('header:help')} />
+        </HeaderLink>
+
+        {currentUser ? (
+          <HeaderDropdown className="right" pointing={true} inline>
+            <HeaderDropdown.Menu>
+              <HeaderDropdown.Item
+                content={<HeaderLinkRaw>{t('header:logout')}</HeaderLinkRaw>}
+                onClick={e => routes.logoutRoute()}
+              />
+            </HeaderDropdown.Menu>
+          </HeaderDropdown>
+        ) : (
+          <HeaderLink to={routerActions.authRoute()}>
+            {t('header:login')}
+          </HeaderLink>
+        )}
+      </Col>
     )
   }
 }
@@ -324,3 +300,27 @@ export default compose(
   withHandlers(handlers),
   pure
 )(HeaderContainer)
+
+/* <Col tablet={12}>
+          <Grid columns={2} stackable>
+            <Col tablet={6}>
+              <HeaderLink to={routerActions.homeRoute()}>
+                {t('header:map')}
+              </HeaderLink>
+            </Col>
+
+            <Col tablet={10} textAlign={isMobile ? 'left' : 'center'}>
+              <HeaderTitle
+                {...rest}
+                entityIcon={entityIcon}
+                entityIconTitle={entityIconTitle}
+                locationIcon={locationIcon}
+                locationIconTitle={locationIconTitle}
+                title={subtitle}
+                onTitleClick={onTitleClick}
+              >
+                {title}
+              </HeaderTitle>
+            </Col>
+          </Grid>
+        </Col> */

@@ -1,5 +1,6 @@
 import config from '@/config'
 import debug from '@/lib/helpers/debug'
+const noop = () => undefined
 
 async function query(client, { query, variables }, { cache, from = '' } = {}) {
   let log = noop

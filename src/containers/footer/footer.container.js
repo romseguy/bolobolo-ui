@@ -40,8 +40,8 @@ function FooterContainer(props) {
   const isMobile = window.currentBreakpoint === sizeTypes.MOBILE
 
   return (
-    <FooterGrid>
-      <Col tablet={13}>
+    <>
+      <Col width={3}>
         <Dropdown
           defaultValue={currentLang}
           inline
@@ -62,10 +62,16 @@ function FooterContainer(props) {
           onChange={onLangChange}
         />
       </Col>
-      <Col tablet={3} textAlign={isMobile ? 'left' : 'right'}>
+      <Col
+        width={13}
+        style={{
+          display: 'flex',
+          justifyContent: 'flex-end'
+        }}
+      >
         {t('app_title')} <Version title={t('version')}>v1.0-alpha</Version>
       </Col>
-    </FooterGrid>
+    </>
   )
 }
 

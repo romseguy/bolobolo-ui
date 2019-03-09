@@ -3,7 +3,7 @@ import { compose, pure } from 'recompose'
 import Icon from '@/lib/ui/components/icon'
 import ToolbarIconLink from './toolbarIconLink'
 
-const noop = () => {}
+const noop = () => undefined
 
 function ToolbarIcon(props) {
   const {

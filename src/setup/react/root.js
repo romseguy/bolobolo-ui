@@ -49,7 +49,6 @@ function Root({ client, i18n, store }) {
             <Suspense fallback={<div />}>
               <App />
             </Suspense>
-            >
           </I18nextProvider>
         </ApolloProvider>
       </Provider>
@@ -57,4 +56,5 @@ function Root({ client, i18n, store }) {
   )
 }
 
-export default hot(module)(Root)
+// export default hot(module)(Root)
+export default Root

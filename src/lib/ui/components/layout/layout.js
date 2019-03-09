@@ -64,10 +64,26 @@ export {
 
 export default function Layout({ children, footer, header }) {
   return (
-    <div>
-      <header>{header}</header>
-      <main>{children}</main>
-      <footer>{footer}</footer>
-    </div>
+    <Grid celled style={{ height: '100vh' }}>
+      <Row
+        style={{
+          height: '4%',
+          alignContent: 'center'
+        }}
+      >
+        {header}
+      </Row>
+
+      <Row style={{ height: '92%' }}>{children}</Row>
+
+      <Row
+        style={{
+          height: '4%',
+          alignContent: 'center'
+        }}
+      >
+        {footer}
+      </Row>
+    </Grid>
   )
 }

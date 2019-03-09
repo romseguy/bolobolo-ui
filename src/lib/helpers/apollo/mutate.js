@@ -1,5 +1,6 @@
 import config from '@/config'
 import debug from '@/lib/helpers/debug'
+const noop = () => undefined
 
 async function mutate(
   client,

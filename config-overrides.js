@@ -20,8 +20,7 @@ module.exports = function ov(config, env) {
       '@babel/plugin-proposal-export-default-from',
       'react-hot-loader/babel',
       'transform-semantic-ui-react-imports',
-      'ramda',
-      'lodash'
+      'ramda'
       // 'babel-plugin-redux-saga',
       // 'babel-plugin-styled-components'
     )

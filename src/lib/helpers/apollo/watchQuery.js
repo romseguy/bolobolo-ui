@@ -1,5 +1,6 @@
 import config from '@/config'
 import debug from '@/lib/helpers/debug'
+const noop = () => undefined
 
 export default function watchQuery(
   client,

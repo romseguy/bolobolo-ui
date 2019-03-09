@@ -1,7 +1,7 @@
 @font-face {
   font-family: 'Fira Sans';
   src: url('../fonts/FiraSans-Regular.woff2') format('woff2'),
-  url('../fonts/FiraSans-Regular.woff') format('woff');
+    url('../fonts/FiraSans-Regular.woff') format('woff');
   font-weight: 400;
   font-style: normal;
 }
@@ -18,23 +18,15 @@ $font-family: $font-name, 'Helvetica Neue', Arial, Helvetica, sans-serif !defaul
 $import-google-fonts: false;
 $icons-font-path: '~semantic-ui-sass/icons' !default;
 
-@import "~semantic-ui-sass/semantic-ui.scss";
+@import '~semantic-ui-sass/semantic-ui.scss';
 
 // SEMANTIC-UI OVERRIDES
-
 img.ui.image {
   display: inline-block !important;
 }
 
 .ui.loading.segment:before {
   background: none;
-}
-
-header .ui.stackable.grid > .column:not(.row) {
-  padding: 0 !important;
-}
-footer .ui.stackable.grid > .column:not(.row) {
-  padding: 0 !important;
 }
 
 // mobile
