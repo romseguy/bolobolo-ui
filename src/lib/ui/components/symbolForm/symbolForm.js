@@ -1,6 +1,5 @@
 import React from 'react'
 import { compose, pure, withHandlers } from 'recompose'
-import { reduxForm } from 'redux-form'
 
 import { Form as UIForm } from '@/lib/ui/components/layout'
 
@@ -33,10 +32,6 @@ function SymbolForm(props) {
 }
 
 export default compose(
-  reduxForm({
-    form: 'SymbolForm',
-    enableReinitialize: true
-  }),
   withHandlers(handlers),
   pure
 )(SymbolForm)

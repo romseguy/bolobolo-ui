@@ -1,7 +1,7 @@
 import React from 'react'
 import { withTranslation } from 'react-i18next'
 import { connect } from 'react-redux'
-import { compose, pure, withState } from 'recompose'
+import { compose } from 'recompose'
 import { NOT_FOUND } from 'redux-first-router'
 import routes from '@/routes'
 
@@ -22,6 +22,7 @@ import { CanvasManager } from '@/lib/ui/components/canvas'
 import { MapManager } from '@/lib/ui/components/map'
 import { Loader } from '@/lib/ui/components/layout'
 import SidePanel from '@/lib/ui/components/sidePanel'
+import NotFound from '@/lib/ui/components/notFound'
 
 class RouterContainer extends React.Component {
   state = {
@@ -86,30 +87,34 @@ class RouterContainer extends React.Component {
 
     let { routeType } = this.props
 
-    const routeProps = { ...this.props, ...this.state }
-
-    // early exit cases
-    if (routeType === routerActions.LOGOUT) {
+    if (routeType === NOT_FOUND) {
+      return <NotFound />
+    } else if (routeType === routerActions.LOGOUT) {
       return null
-    } else if (routeType === routerActions.AUTH) {
-      if (prevRoute.requiresAuth === false) {
-        routeType = prevRouteType
-      } else {
-        routeType = routerActions.ROOT
-      }
     } else if (currentRoute.requiresAuth !== false && !currentUser) {
       return <Loader indeterminate />
     }
 
-    if (
-      currentRoute.control === MapManager ||
-      currentRoute.control === CanvasManager
-    ) {
+    let { control: Control } = currentRoute
+
+    if (routeType === routerActions.AUTH) {
+      if (prevRoute.requiresAuth === false) {
+        routeType = prevRouteType
+      } else {
+        routeType = routerActions.HOME
+      }
+
+      Control = routes[routeType].control
+    }
+
+    const routeProps = { ...this.props, ...this.state }
+
+    if (Control === MapManager || Control === CanvasManager) {
       return (
         <>
           <MainPanelContainer
             {...routeProps}
-            control={control}
+            control={Control}
             currentRoute={routes[routeType]}
             routeType={routeType}
           />
@@ -119,7 +124,7 @@ class RouterContainer extends React.Component {
     } else {
       return (
         <>
-          <currentRoute.control {...routeProps} routes={routerActions} />
+          <Control {...routeProps} routes={routerActions} />
           {this.renderSidePanel(routeType)}
         </>
       )
@@ -147,6 +152,5 @@ const mapStateToProps = state => {
 
 export default compose(
   withTranslation(),
-  connect(mapStateToProps),
-  pure
+  connect(mapStateToProps)
 )(RouterContainer)

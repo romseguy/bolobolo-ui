@@ -1,6 +1,5 @@
 import React from 'react'
 import { compose, pure, withHandlers } from 'recompose'
-import { formValues, reduxForm } from 'redux-form'
 
 import { Form as UIForm } from '@/lib/ui/components/layout'
 
@@ -89,11 +88,4 @@ class PlaceForm extends React.Component {
   }
 }
 
-export default compose(
-  reduxForm({
-    form: 'PlaceForm',
-    enableReinitialize: true
-  }),
-  formValues('action'),
-  withHandlers(handlers)
-)(PlaceForm)
+export default compose(withHandlers(handlers))(PlaceForm)

@@ -8,8 +8,12 @@ export default function* toggleModalSaga({
 }) {
   const modals = yield select(getModals)
   const modal = modals[modalType]
+  console.log('modal', modal)
 
   if (!modal) {
+    console.log('modalType', modalType)
+    console.log('modalComponentProps', modalComponentProps)
+    console.log('modalProps', modalProps)
     yield put(
       modalActions.setModal(modalType, modalComponentProps, {
         ...modalProps,

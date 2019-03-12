@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Field } from 'redux-form'
 
 import { required } from '@/lib/ui/helpers/form/validators'
 import { SymbolFormBreakpoints as breakpoints } from '@/lib/constants/breakpoints'
@@ -51,7 +50,7 @@ class SymbolFormFields extends Component {
           )}
         </Col>
 
-        <Field
+        <input
           name="title"
           component={InputField}
           type="text"
@@ -62,7 +61,7 @@ class SymbolFormFields extends Component {
           validate={[required({ msg: t('errors:required') })]}
         />
 
-        <Field
+        <input
           name="body"
           component={TextareaField}
           breakpoints={breakpoints}

@@ -48,4 +48,23 @@ class Input extends Component {
   }
 }
 
-export default Input
+class InputField extends Component {
+  focusInput() {
+    this.input.focus()
+  }
+
+  render() {
+    const { field, form, ...props } = this.props
+    return (
+      <Row>
+        <Col>
+          <input {...field} {...props} />
+        </Col>
+      </Row>
+    )
+  }
+}
+
+// ref={node => (this.input = node)}
+
+export default InputField

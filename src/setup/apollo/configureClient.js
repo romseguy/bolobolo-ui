@@ -36,7 +36,7 @@ function configureClient() {
   const loggerLink = new ApolloLink((operation, forward) => {
     debug(operation.operationName)
     return forward(operation).map(result => {
-      debug(`received result from ${operation.operationName}`)
+      debug(`received result from ${operation.operationName}`, result)
       return result
     })
   })

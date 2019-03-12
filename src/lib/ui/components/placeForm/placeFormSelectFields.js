@@ -1,6 +1,5 @@
 import React from 'react'
 import { compose, withHandlers } from 'recompose'
-import { Field, formValues } from 'redux-form'
 
 import { PlaceFormBreakpoints as breakpoints } from '@/lib/constants/breakpoints'
 import { required } from '@/lib/ui/helpers/form/validators'
@@ -36,7 +35,7 @@ function PlaceFormSelectFields(props) {
 
   return (
     <Grid verticalAlign="middle">
-      <Field
+      <input
         name="selectedPlaceTitle"
         component={SelectField}
         breakpoints={breakpoints}
@@ -85,7 +84,4 @@ function PlaceFormSelectFields(props) {
   )
 }
 
-export default compose(
-  formValues('selectedPlaceTitle'),
-  withHandlers(handlers)
-)(PlaceFormSelectFields)
+export default compose(withHandlers(handlers))(PlaceFormSelectFields)

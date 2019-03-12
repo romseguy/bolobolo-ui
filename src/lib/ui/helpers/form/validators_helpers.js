@@ -1,5 +1,7 @@
 import { format } from './validators'
 
+export const REG_EMAIL = /^[a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i
+
 export function prepare(ifCond, unlessCond, allowBlank, func) {
   return function(value = '', allValues = {}) {
     value = '' + value

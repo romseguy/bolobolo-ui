@@ -1,22 +1,23 @@
 import React, { Component } from 'react'
-import { Field } from 'redux-form'
 import { authTypes } from '@/lib/constants/auth'
-import { AuthFormBreakpoints as breakpoints } from '@/lib/constants/breakpoints'
-import {
-  confirmation,
-  email,
-  length,
-  required
-} from '@/lib/ui/helpers/form/validators'
+// import {
+//   confirmation,
+//   email,
+//   length,
+//   required
+// } from '@/lib/ui/helpers/form/validators'
 
 import InputField from '@/lib/ui/components/inputField'
 import {
   Button,
+  Form,
   Grid,
   Message,
   Row,
   NoPadCol as Col
 } from '@/lib/ui/components/layout'
+import Icon from '@/lib/ui/components/icon'
+import { REG_EMAIL } from '../../helpers/form/validators_helpers'
 
 class AuthFormStep1 extends Component {
   componentDidMount() {
@@ -24,38 +25,38 @@ class AuthFormStep1 extends Component {
   }
 
   focusEmptyInput() {
-    const { currentAction } = this.props
+    const { currentAction, formState } = this.props
     const isRegister = currentAction === authTypes.REGISTER
     const isForgotten = currentAction === authTypes.FORGOTTEN
-    const emailInput = this.emailInput.getRenderedComponent()
-    const usernameInput =
-      isRegister && this.usernameInput.getRenderedComponent()
-    const passwordInput =
-      !isForgotten && this.passwordInput.getRenderedComponent()
-    const password2Input =
-      isRegister && this.password2Input.getRenderedComponent()
 
-    if (!emailInput.input.value.length) {
-      emailInput.focusInput()
-    } else if (isRegister && !usernameInput.input.value.length) {
-      usernameInput.focusInput()
-    } else if (
-      !isForgotten &&
-      passwordInput &&
-      !passwordInput.input.value.length
+    if (
+      this.emailEl &&
+      (!formState.values.email || !formState.values.email.length)
     ) {
-      passwordInput.focusInput()
-    } else if (isRegister && !password2Input.input.value.length) {
-      password2Input.focusInput()
+      this.emailEl.focus()
     }
+
+    // if (!emailInput.input.value.length) {
+    //   emailInput.focusInput()
+    // } else if (isRegister && !usernameInput.input.value.length) {
+    //   usernameInput.focusInput()
+    // } else if (
+    //   !isForgotten &&
+    //   passwordInput &&
+    //   !passwordInput.input.value.length
+    // ) {
+    //   passwordInput.focusInput()
+    // } else if (isRegister && !password2Input.input.value.length) {
+    //   password2Input.focusInput()
+    // }
   }
 
   handleForgottenClick = event => {
-    const { currentAction, setCurrentAction, onForgottenClick } = this.props
+    const { currentAction, setCurrentAction, onSubmit } = this.props
     const isForgotten = currentAction === authTypes.FORGOTTEN
 
     if (isForgotten) {
-      onForgottenClick()
+      onSubmit()
     } else {
       event.preventDefault()
       setCurrentAction(authTypes.FORGOTTEN)
@@ -68,12 +69,12 @@ class AuthFormStep1 extends Component {
     this.resetServerErrors()
   }
 
-  handleLoginClick = event => {
-    const { currentAction, setCurrentAction, onLoginClick } = this.props
+  handleLoginClick = (values, actions) => {
+    const { currentAction, setCurrentAction, onSubmit } = this.props
     const isLogin = currentAction === authTypes.LOGIN
 
     if (isLogin) {
-      onLoginClick()
+      onSubmit()
     } else {
       event.preventDefault()
       setCurrentAction(authTypes.LOGIN)
@@ -82,11 +83,11 @@ class AuthFormStep1 extends Component {
     }
   }
 
-  handleRegisterClick = event => {
-    const { currentAction, setCurrentAction, onRegisterClick } = this.props
+  handleRegisterClick = (values, actions) => {
+    const { currentAction, setCurrentAction, onSubmit } = this.props
     const isRegister = currentAction === authTypes.REGISTER
 
-    if (isRegister) {
+    if (onSubmit) {
       onRegisterClick()
     } else {
       event.preventDefault()
@@ -96,8 +97,13 @@ class AuthFormStep1 extends Component {
     }
   }
 
+  resetServerErrors() {
+    const { setServerErrors } = this.props
+    setServerErrors([])
+  }
+
   renderButton(authType, positive = false) {
-    const { submitting, t } = this.props
+    const { t } = this.props
 
     let onClick = this.handleRegisterClick
 
@@ -111,27 +117,17 @@ class AuthFormStep1 extends Component {
     }
 
     return (
-      <Button
-        disabled={submitting}
-        inverted
-        onClick={onClick}
-        positive={positive}
-      >
+      <Button inverted onClick={onClick} positive={positive}>
         {t(`form:auth.${authType.toLowerCase()}`)}
       </Button>
     )
   }
 
-  resetServerErrors() {
-    const { setServerErrors } = this.props
-    setServerErrors([])
-  }
-
   render() {
     const {
-      clientErrors,
       currentAction,
-      hasClientErrors,
+      formBuilder: { email, password },
+      formState: { validity, touched, values },
       hasServerErrors,
       serverErrors,
       t
@@ -140,85 +136,88 @@ class AuthFormStep1 extends Component {
     const isRegister = currentAction === authTypes.REGISTER
     const isForgotten = currentAction === authTypes.FORGOTTEN
 
-    const validatePassword = [required({ msg: t('errors:required') })]
+    let emailErrorEl = null
+    let passwordErrorEl = null
 
-    if (isRegister) {
-      validatePassword.push(
-        length({ min: 6, msg: t('errors:auth.password_too_short') })
+    if (touched.email && !validity.email) {
+      const emailError =
+        values.email.length > 0
+          ? t('errors:auth.email_invalid')
+          : t('errors:required')
+
+      emailErrorEl = (
+        <>
+          <Icon name="warning sign" title={emailError} />
+          {emailError}
+        </>
       )
     }
 
-    return (
-      <Grid columns={2} verticalAlign="middle">
-        <Field
-          name="email"
-          component={InputField}
-          type="text"
-          breakpoints={breakpoints}
-          label={t('form:auth.email')}
-          ref={node => (this.emailInput = node)}
-          forwardRef
-          validate={[
-            required({ msg: t('errors:required') }),
-            email({ msg: t('errors:auth.email_invalid') })
-          ]}
-          onChange={this.handleInputChange}
-        />
+    if (touched.password && !validity.password) {
+      const passwordError = !values.password.length
+        ? t('errors:required')
+        : values.password.length < 6
+        ? t('errors:auth.password_too_short')
+        : null
 
-        {isRegister && (
-          <Field
-            name="username"
-            component={InputField}
-            type="text"
-            breakpoints={breakpoints}
-            label={t('form:auth.username')}
-            ref={node => (this.usernameInput = node)}
-            forwardRef
-            validate={[
-              required({ msg: t('errors:required') }),
-              length({ max: 40, msg: t('errors:register.username_too_long') })
-            ]}
-            onChange={this.handleInputChange}
-          />
-        )}
+      passwordErrorEl = passwordError ? (
+        <>
+          <Icon name="warning sign" title={passwordError} />
+          {passwordError}
+        </>
+      ) : null
+    }
+
+    return (
+      <Grid>
+        <Row>
+          <Col>
+            <div
+              className={
+                emailErrorEl ? 'error required field' : 'required field'
+              }
+            >
+              <label
+                htmlFor="email"
+                style={{ color: emailErrorEl ? 'red' : 'white' }}
+              >
+                {t('form:auth.email')}
+              </label>
+              <div className="ui input">
+                <input
+                  {...email('email')}
+                  placeholder="votre_email@lilo.org"
+                  required
+                  ref={el => (this.emailEl = el)}
+                />
+              </div>
+            </div>
+            {emailErrorEl && <Message error content={emailErrorEl} />}
+          </Col>
+        </Row>
 
         {!isForgotten && (
-          <Field
-            name="password"
-            component={InputField}
-            type="password"
-            breakpoints={breakpoints}
-            label={t('form:auth.password')}
-            ref={node => (this.passwordInput = node)}
-            forwardRef
-            validate={validatePassword}
-            onChange={this.handleInputChange}
-          />
-        )}
-
-        {isRegister && (
-          <Field
-            name="password2"
-            component={InputField}
-            type="password"
-            breakpoints={breakpoints}
-            label={t('form:auth.password2')}
-            ref={node => (this.password2Input = node)}
-            forwardRef
-            validate={[
-              confirmation({
-                field: 'password',
-                msg: t('errors:register.passwordsNotMatch')
-              }),
-              required({ msg: t('errors:required') })
-            ]}
-            onChange={this.handleInputChange}
-          />
+          <Row>
+            <Col>
+              <Form.Input
+                label={{
+                  htmlFor: 'password',
+                  style: { color: passwordErrorEl ? 'red' : 'white' },
+                  children: t('form:auth.password')
+                }}
+                {...password('password')}
+                required
+                minLength={6}
+                error={!!passwordErrorEl}
+              />
+              {passwordErrorEl && <Message error content={passwordErrorEl} />}
+            </Col>
+          </Row>
         )}
 
         {hasServerErrors && (
           <Row>
-            <Col width={15}>
+            <Col>
               <Message size="tiny" error>
                 <Message.Header>{t('errors:auth.fixForm')}</Message.Header>
                 <Message.List>
@@ -243,7 +242,7 @@ class AuthFormStep1 extends Component {
           </Button.Group>
         </Row>
 
-        <Row>
+        {/* <Row>
           {isRegister ? (
             <Button.Group>
               {this.renderButton(authTypes.LOGIN)}
@@ -263,10 +262,48 @@ class AuthFormStep1 extends Component {
               {this.renderButton(authTypes.FORGOTTEN)}
             </Button.Group>
           )}
-        </Row>
+        </Row> */}
       </Grid>
     )
   }
 }
 
 export default AuthFormStep1
+
+/*
+{isRegister && (
+          <input
+            name="username"
+            component={InputField}
+            type="text"
+            breakpoints={breakpoints}
+            label={t('form:auth.username')}
+            ref={node => (this.usernameInput = node)}
+            forwardRef
+            validate={[
+              required({ msg: t('errors:required') }),
+              length({ max: 40, msg: t('errors:register.username_too_long') })
+            ]}
+            onChange={this.handleInputChange}
+          />
+        )}
+        {isRegister && (
+          <input
+            name="password2"
+            component={InputField}
+            type="password"
+            breakpoints={breakpoints}
+            label={t('form:auth.password2')}
+            ref={node => (this.password2Input = node)}
+            forwardRef
+            validate={[
+              confirmation({
+                field: 'password',
+                msg: t('errors:register.passwordsNotMatch')
+              }),
+              required({ msg: t('errors:required') })
+            ]}
+            onChange={this.handleInputChange}
+          />
+        )}
+         */

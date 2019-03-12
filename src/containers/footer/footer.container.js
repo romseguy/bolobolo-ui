@@ -21,6 +21,7 @@ const Parrot = styled(Icon)`
 const Version = styled.span`
   border-bottom: 1px dashed ${BINARY_COLOR_BLUE_30};
   cursor: help;
+  margin-left: 10px;
 
   :hover {
     border-color: ${BINARY_COLOR_BLUE_50};

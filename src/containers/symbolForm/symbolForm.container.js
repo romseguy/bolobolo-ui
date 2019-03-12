@@ -2,7 +2,7 @@ import { merge } from 'ramda'
 import React from 'react'
 import { graphql } from 'react-apollo'
 import { connect } from 'react-redux'
-import { change } from 'redux-form'
+const change = () => undefined
 import { compose, pure, withHandlers } from 'recompose'
 
 import roleTypes from '@/lib/constants/roleTypes'

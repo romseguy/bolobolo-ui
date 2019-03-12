@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { withTranslation } from 'react-i18next'
 import { graphql } from 'react-apollo'
 import { compose, getContext, pure, withHandlers } from 'recompose'
-import { change } from 'redux-form'
+const change = () => undefined
 import { connect } from 'react-redux'
 
 import { query } from '@/lib/helpers/apollo'
@@ -73,9 +73,9 @@ const handlers = {
       setCenter([userLocation.lat, userLocation.lng])
       routes.homeRoute()
     }
-  },
+  }
 
-  onTitleClick: props => event => {
+  /*onTitleClick: props => event => {
     const {
       change,
       routeType,
@@ -136,7 +136,7 @@ const handlers = {
         size: 'small'
       })
     }
-  }
+  } */
 }
 
 class HeaderContainer extends Component {
@@ -239,9 +239,9 @@ class HeaderContainer extends Component {
           </HeaderLink>
         )}
 
-        <HeaderLink to={routerActions.aboutRoute()} style={{ marginRight: 0 }}>
+        {/* <HeaderLink to={routerActions.aboutRoute()}>
           <Icon name="question circle" title={t('header:help')} />
-        </HeaderLink>
+        </HeaderLink> */}
 
         {currentUser ? (
           <HeaderDropdown className="right" pointing={true} inline>

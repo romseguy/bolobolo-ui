@@ -7,6 +7,7 @@ const template = `
 text-decoration: underline;
 cursor: pointer;
 color: ${BINARY_COLOR_BLUE_30};
+margin-left: 10px;
 
 :hover {
   color: ${BINARY_COLOR_BLUE_50}

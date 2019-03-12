@@ -2,7 +2,7 @@ import React from 'react'
 
 import isNumber from '@/lib/ui/helpers/isNumber'
 
-import { prepare, regFormat } from './validators_helpers'
+import { prepare, regFormat, REG_EMAIL } from './validators_helpers'
 
 export function required({ message, msg, if: ifCond, unless } = {}) {
   msg = msg || message
@@ -31,8 +31,6 @@ export function format({
     }
   })
 }
-
-const REG_EMAIL = /^[a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i
 
 export function email(options) {
   options = Object.assign({}, options)

@@ -46,6 +46,7 @@ export function* authRouteSaga(payload, settings) {
 
   yield call(toggleAuthModalSaga, {
     modalProps: {
+      closeOnDimmerClick: false,
       onClose: () => {
         onCloseChannel.put({})
       }

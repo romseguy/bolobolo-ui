@@ -1,6 +1,6 @@
 import React from 'react'
 import { compose } from 'recompose'
-import { Field } from 'redux-form'
+
 import {
   NoPadCol as Col,
   Grid,
@@ -40,7 +40,7 @@ function RadioGroup(props) {
 function PlaceFormSelector({ t }) {
   return (
     <Grid>
-      <Field name="action" component={RadioGroup} t={t} />
+      <input name="action" component={RadioGroup} t={t} />
     </Grid>
   )
 }

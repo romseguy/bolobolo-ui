@@ -4,7 +4,7 @@ import { graphql } from 'react-apollo'
 import { withTranslation } from 'react-i18next'
 import { connect } from 'react-redux'
 import { compose, getContext, pure, withHandlers, withState } from 'recompose'
-import { change } from 'redux-form'
+const change = () => undefined
 
 import geo from '@/lib/api/geo'
 import { getGeocodedDepartment, getGeocodedProperty } from '@/lib/api/geo'

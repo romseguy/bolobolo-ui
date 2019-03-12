@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { compose, pure } from 'recompose'
-import { reduxForm } from 'redux-form'
 
 import { Form as UIForm, Loader } from '@/lib/ui/components/layout'
 
@@ -60,10 +59,4 @@ class UserForm extends Component {
   }
 }
 
-export default compose(
-  reduxForm({
-    form: 'UserForm',
-    enableReinitialize: true
-  }),
-  pure
-)(UserForm)
+export default compose(pure)(UserForm)

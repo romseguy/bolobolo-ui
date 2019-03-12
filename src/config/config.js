@@ -10,7 +10,7 @@ export default {
     debug: true && isDev,
     devTools: true && isDev,
     i18n: false && isDev,
-    logger: false && isDev
+    logger: true && isDev
   },
   mocking: false
 }

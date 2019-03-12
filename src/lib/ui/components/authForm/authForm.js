@@ -1,57 +1,35 @@
 import React from 'react'
-import { reduxForm } from 'redux-form'
-import { compose, pure, withHandlers } from 'recompose'
+import { all, equals, values } from 'ramda'
 import { authStepsTypes, authTypes } from '@/lib/constants/auth'
-import { Form as UIForm } from '@/lib/ui/components/layout'
+import { Form } from '@/lib/ui/components/layout'
 import AuthFormStep1 from './authFormStep1'
 
-const handlers = {
-  onForgottenClick: props => () => {
-    const { onSubmit, handleSubmit } = props
-
-    handleSubmit(event, values => onSubmit(values))
-  },
-  onLoginClick: props => () => {
-    const { onSubmit, handleSubmit } = props
-
-    handleSubmit(event, values => onSubmit(values))
-  },
-  onRegisterClick: props => () => {
-    const { onSubmit, handleSubmit } = props
-
-    handleSubmit(event, values => onSubmit(values))
-  }
-}
-
 function AuthForm(props) {
-  const { currentStep, clientErrors, serverErrors, ...rest } = props
-
-  const hasClientErrors = Array.isArray(clientErrors) && clientErrors.length > 0
+  const { currentStep, formState, serverErrors, onSubmit, ...rest } = props
   const hasServerErrors = Array.isArray(serverErrors) && serverErrors.length > 0
+  const hasClientErrors = !all(v => v === true, values(formState.validity))
+  const onStep1Submit = () => {
+    if (hasClientErrors) return
+    onSubmit()
+  }
 
   return (
-    <UIForm error={hasClientErrors || hasServerErrors} loading={false}>
+    <Form error={hasClientErrors || hasServerErrors} loading={false}>
       {currentStep === authStepsTypes.FIRST && (
         <AuthFormStep1
-          clientErrors={clientErrors}
-          hasClientErrors={hasClientErrors}
+          formState={formState}
           hasServerErrors={hasServerErrors}
           serverErrors={serverErrors}
+          onSubmit={onStep1Submit}
           {...rest}
         />
       )}
 
       {currentStep === authStepsTypes.REGISTER_OK && (
-        <h1>{t('form:auth.department_confirm')}</h1>
+        <h1>{/* t('form:auth.department_confirm') */ 0}</h1>
       )}
-    </UIForm>
+    </Form>
   )
 }
 
-export default compose(
-  reduxForm({
-    form: 'AuthForm'
-  }),
-  withHandlers(handlers),
-  pure
-)(AuthForm)
+export default AuthForm

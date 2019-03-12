@@ -1,5 +1,5 @@
 import React from 'react'
-import { Field } from 'redux-form'
+
 import {
   Col,
   Form as UIForm,
@@ -43,7 +43,7 @@ function UserFormSelector(props) {
     <Grid>
       <Row>
         <Col mobile={16} tablet={16} computer={11}>
-          <Field name="action" component={RadioGroup} t={t} />
+          <input name="action" component={RadioGroup} t={t} />
         </Col>
       </Row>
 
@@ -53,7 +53,7 @@ function UserFormSelector(props) {
             <label>Nom du lieu :</label>
           </Col>
           <Col mobile={16} tablet={16} computer={11}>
-            <Field
+            <input
               name="userId"
               component={Select}
               placeholder={t('form:user.select.label')}

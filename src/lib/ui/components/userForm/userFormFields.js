@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Field } from 'redux-form'
 
 import { Button, Col, Grid, Row } from '@/lib/ui/components/layout'
 
@@ -23,7 +22,7 @@ class UserFormFields extends Component {
             </Col>
 
             <Col mobile={16} tablet={16} computer={11}>
-              <Field
+              <input
                 name="email"
                 component="input"
                 type="text"
@@ -40,7 +39,7 @@ class UserFormFields extends Component {
               <label htmlFor="city">Ville :</label>
             </Col>
             <Col mobile={16} tablet={16} computer={11}>
-              <Field
+              <input
                 name="city"
                 component={GeosuggestField}
                 id="city"

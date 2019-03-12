@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import scriptLoader from 'react-async-script-loader'
 import { compose, pure } from 'recompose'
-import { reduxForm, Field } from 'redux-form'
 
 import keepCities from '@/lib/ui/helpers/keepCities'
 import { LocationFormBreakpoints as breakpoints } from '@/lib/constants/breakpoints'
@@ -91,7 +90,7 @@ class SetLocationForm extends Component {
     } else {
       content = (
         <Grid verticalAlign="middle">
-          <Field
+          <input
             name="city"
             component={GeosuggestField}
             breakpoints={breakpoints}
@@ -104,9 +103,9 @@ class SetLocationForm extends Component {
             onSuggestSelect={this.handleSuggestSelect}
           />
 
-          <Field name="department" component="input" type="hidden" />
+          <input name="department" component="input" type="hidden" />
 
-          <Field name="marker" component="input" type="hidden" />
+          <input name="marker" component="input" type="hidden" />
         </Grid>
       )
     }
@@ -131,8 +130,5 @@ export default compose(
       process.env.REACT_APP_MAPS_API_KEY
     }&libraries=places`
   ),
-  reduxForm({
-    form: 'SetLocationForm'
-  }),
   pure
 )(SetLocationForm)

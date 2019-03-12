@@ -6,11 +6,7 @@ export default {
     }
 
     if (typeof type.startsWith === 'function') {
-      if (type.startsWith('@@redux-form')) {
-        return false
-      }
-
-      if (type.startsWith('redux-tooltip') || type.startsWith('@@redux-form')) {
+      if (type.startsWith('redux-tooltip')) {
         return false
       }
     }

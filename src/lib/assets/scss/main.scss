@@ -1,12 +1,4 @@
 @font-face {
-  font-family: 'Fira Sans';
-  src: url('../fonts/FiraSans-Regular.woff2') format('woff2'),
-    url('../fonts/FiraSans-Regular.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
-}
-
-@font-face {
   font-family: 'myriad-pro-condensed';
   src: url('../fonts/myriad-pro-condensed.woff') format('woff');
   font-weight: 400;
@@ -20,6 +12,39 @@ $icons-font-path: '~semantic-ui-sass/icons' !default;
 
 @import '~semantic-ui-sass/semantic-ui.scss';
 
+$text-colors: blue, green, orange, pink, purple, red, teal, yellow, black, grey,
+  white;
+$colors: (
+  blue: blue,
+  green: #03c9a9,
+  orange: orange,
+  pink: pink,
+  purple: purple,
+  red: red,
+  teal: teal,
+  yellow: yellow,
+  black: black,
+  grey: grey,
+  white: white
+);
+
+@each $tc in $text-colors {
+  [class*='#{$tc} text'] {
+    color: map-get($colors, $tc);
+  }
+}
+
+@each $tc in $text-colors {
+  [class*='#{$tc} link'] {
+    $color: map-get($colors, $tc);
+    color: $color;
+    &:hover,
+    &:focus {
+      color: lighten($color, 10%);
+    }
+  }
+}
+
 // SEMANTIC-UI OVERRIDES
 img.ui.image {
   display: inline-block !important;
@@ -28,6 +53,22 @@ img.ui.image {
 .ui.loading.segment:before {
   background: none;
 }
+
+// .dimmed.dimmable > .ui.animating.dimmer,
+// .dimmed.dimmable > .ui.visible.dimmer,
+// .ui.active.dimmer {
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+// }
+// .ui.modal,
+// .ui.active.modal {
+//   margin: 0 auto !important;
+//   top: auto !important;
+//   left: auto !important;
+//   transform-origin: center !important;
+//   transition: all ease 0.5s;
+// }
 
 // mobile
 /*@media only screen and (max-width: 767px) {

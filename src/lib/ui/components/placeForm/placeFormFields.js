@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import scriptLoader from 'react-async-script-loader'
 import { compose } from 'recompose'
-import { Field, formValues } from 'redux-form'
 
 import keepCities from '@/lib/ui/helpers/keepCities'
 import { required } from '@/lib/ui/helpers/form/validators'
@@ -123,7 +122,7 @@ class PlaceFormFields extends Component {
 
     return (
       <Grid verticalAlign="middle">
-        <Field
+        <input
           name="title"
           component={InputField}
           type="text"
@@ -134,7 +133,7 @@ class PlaceFormFields extends Component {
           validate={[required({ msg: t('errors:required') })]}
         />
 
-        <Field
+        <input
           name="city"
           component={GeosuggestField}
           breakpoints={breakpoints}
@@ -149,9 +148,9 @@ class PlaceFormFields extends Component {
           onSuggestSelect={this.handleSuggestSelect}
         />
 
-        <Field name="department" component="input" type="hidden" />
+        <input name="department" component="input" type="hidden" />
 
-        <Field
+        <input
           name="marker"
           component={MapField}
           breakpoints={breakpoints}
@@ -200,6 +199,5 @@ class PlaceFormFields extends Component {
 export default compose(
   scriptLoader(
     'https://maps.googleapis.com/maps/api/js?key=AIzaSyCZbB5gENry_UJNvwtOStrRqTt7sTi0E9k&libraries=places'
-  ),
-  formValues('marker')
+  )
 )(PlaceFormFields)

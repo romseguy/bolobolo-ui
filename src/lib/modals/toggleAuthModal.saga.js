@@ -4,7 +4,7 @@ import { toggleModalSaga } from '@/lib/sagas'
 
 const defaultModalProps = {
   basic: true,
-  closeOnRootNodeClick: false,
+  closeOnDocumentClick: false,
   size: 'small'
 }
 

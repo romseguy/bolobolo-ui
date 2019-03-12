@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { Component, useContext } from 'react'
 import { connect } from 'react-redux'
-import { compose, getContext, pure } from 'recompose'
+import { compose, getContext } from 'recompose'
 
 import bindActionCreators from '@/lib/helpers/bindActionCreators'
 import { watchQuery } from '@/lib/helpers/apollo'
@@ -67,6 +67,5 @@ export default compose(
     mapStateToProps,
     mapDispatchToProps
   ),
-  getContext({ client: PropTypes.object }),
-  pure
+  getContext({ client: PropTypes.object })
 )(App)

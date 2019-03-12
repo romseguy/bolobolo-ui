@@ -6,11 +6,8 @@ import Icon from '@/lib/ui/components/icon'
 export default function NotFound() {
   const { t } = useTranslation()
   return (
-    <Grid>
-      <h1>
-        <Icon name="parrot" height={32} /> 404
-      </h1>
-      <p>{t('not_found')}.</p>
-    </Grid>
+    <div style={{ display: 'flex', margin: '0 auto', alignItems: 'center' }}>
+      <Icon name="parrot" height={32} /> {t('not_found')}.
+    </div>
   )
 }
